@@ -16,6 +16,13 @@ app.use(express.urlencoded({ extended: false }));
 
 
 
+let userTransactions = [];
+let totalPointsAdded = 0;
+let totalPointsSpent = 0;
+
+
+// home
 app.get('/', (req, res) => {
     res.render('home.ejs');
+    console.log('route hit');
 });
