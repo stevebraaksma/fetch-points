@@ -16,6 +16,6 @@ app.use(express.urlencoded({ extended: false }));
 
 
 
-bookRouter.get('/home', (req, res) => {
+app.get('/', (req, res) => {
     res.render('home.ejs');
 });
