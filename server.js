@@ -22,12 +22,18 @@ app.get('/', (req, res) => {
 // add route
 app.post('/add', (req, res) => {
     res.render('home.ejs');
+    let currentTransactionPayer = req.body.payer;
+    let currentTransactionPoints = Math.floor(req.body.points);
     let currentTransaction = {
-        payer: req.body.payer,
-        points: req.body.points
+        payer: currentTransactionPayer,
+        points: currentTransactionPoints,
     }
     userTransactions.push(currentTransaction);
     console.log(userTransactions);
     // also need to push timestamp as well
+
+    totalPointsAdded = totalPointsAdded + currentTransactionPoints
+
+    console.log(totalPointsAdded);
 
 });
