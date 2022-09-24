@@ -52,14 +52,43 @@ app.post('/add', (req, res) => {
 
 // balance route
 app.get('/balance', (req, res) => {
-    // res.render('balance.ejs');
-    // console.log('route hit');
+   
 
+    // let consolidatedPayers = [];
+
+    // This code works, adds company name to list only if not alreay in the list
+    let payerNameList = [];
+    for (let i = 0; i < userTransactions.length; i++){
+        if (payerNameList.includes(userTransactions[i].payer)) {
+            console.log('do nothing')
+        } else {
+            console.log('we do some thing')
+            payerNameList.push(userTransactions[i].payer)
+            console.log(payerNameList);
+        }
+    }
+
+    let payerNameAndPoints = [];
+
+    for (let i = 0; i < payerNameList.length; i++){
+        let xoom = payerNameList[i];
+        let currentPayerCounter = 0;
+        for (let iter = 0; iter < userTransactions.length; iter++){
+            if (payerNameList[i] === userTransactions[iter].payer) {
+                console.log('its a doozy');
+                currentPayerCounter = currentPayerCounter + userTransactions[iter].points;
+                console.log(currentPayerCounter);
+            }
+        }
+
+        let obj2 = {};
+        obj2[payerNameList[i]] = currentPayerCounter;
+        payerNameAndPoints.push(obj2);
+        console.log(payerNameAndPoints);
+    }
     res.render('balance.ejs', {
-        userTransactions: userTransactions,
+        payerNameAndPoints: payerNameAndPoints,
     })
-    console.log(userTransactions[0].payer);
-
 });
 
 

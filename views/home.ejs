@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Fetch-Points</title>
-	</head>
-	<body>
-		<h1>Fetch-Points</h1>
-        <br><br>
-		<form action="/add" method="POST">
-			Payer: <input type="text" name="payer" /><br><br>
-			Points: <input type="number" name="points" /><br><br>
-			<input type="submit" name="" value="Add Transaction" />
-		</form>
-	</body>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch-Points</title>
+  </head>
+  <body>
+    <h1>Fetch-Points</h1>
+    <br /><br />
+    <form action="/add" method="POST">
+      Payer: <input type="text" name="payer" /><br /><br />
+      Points: <input type="number" name="points" /><br /><br />
+      <input type="submit" name="" value="Add Transaction" />
+    </form>
+    <br /><br />
+    <form action="/balance">
+      <input type="submit" value="Balance" />
+    </form>
+    <br /><br />
+    <form action="/spend">
+      <input type="submit" value="Spend" />
+    </form>
+    <br /><br />
+  </body>
 </html>

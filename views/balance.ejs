@@ -1,30 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Fetch-Points</title>
-	</head>
-	<body>
-		<h1>Fetch-Points</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch-Points</title>
+  </head>
 
-        <% if (userTransactions.length > 0) { %>
+  <body>
+    <h1>Fetch-Points</h1>
 
+    <% if (payerNameAndPoints.length > 0) { %>
 
-		<h2>Here is Your Balance!</h2>
-		<%=userTransactions[0].payer%>
+    <h2>Here is Your Balance!</h2>
 
+    <% for (let i = 0; i < payerNameAndPoints.length; i++){ %>
+    <%=payerNameAndPoints[i].Coors%> <% } %> <% } else { %>
+    <h2>Sorry, you have no balance</h2>
+    <% } %>
 
-        <%  }  else { %>
-			<h2>Sorry, you have no balance</h2>
-		<%  }  %>
-
-		<br><br><br>
-		<form action="/">
-			<input type="submit" value="Back to Home" />
-		</form>
-
-	</body>
-	</body>
+    <br /><br /><br />
+    <form action="/">
+      <input type="submit" value="Back to Home" />
+    </form>
+  </body>
 </html>
