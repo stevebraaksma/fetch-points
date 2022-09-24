@@ -16,7 +16,6 @@ let totalPointsSpent = 0;
 // home route
 app.get('/', (req, res) => {
     res.render('home.ejs');
-    // console.log('route hit');
 });
 
 // add route
@@ -29,7 +28,6 @@ app.post('/add', (req, res) => {
         points: currentTransactionPoints,
     }
     userTransactions.push(currentTransaction);
-    console.log(userTransactions);
     // also need to push timestamp as well
     // consider - may need to have some type of input selector
     // .. for the time stamp to be in a standard format
@@ -41,13 +39,27 @@ app.post('/add', (req, res) => {
     // and worry about default later or not at all
 
     totalPointsAdded = totalPointsAdded + currentTransactionPoints
-
-    console.log(totalPointsAdded);
-
 });
 
 
 // do the spend route here
+// balance route
+app.get('/spend', (req, res) => {
+   
+
+
+
+    res.render('balance.ejs', {
+        userTransactions: userTransactions,
+    })
+});
+
+//transactions route
+app.get('/transactions', (req, res) => {
+    res.render('transactions.ejs', {
+        userTransactions: userTransactions,
+    })
+});
 
 
 // balance route
@@ -60,31 +72,23 @@ app.get('/balance', (req, res) => {
     let payerNameList = [];
     for (let i = 0; i < userTransactions.length; i++){
         if (payerNameList.includes(userTransactions[i].payer)) {
-            console.log('do nothing')
         } else {
-            console.log('we do some thing')
             payerNameList.push(userTransactions[i].payer)
-            console.log(payerNameList);
         }
     }
 
     let payerNameAndPoints = [];
 
     for (let i = 0; i < payerNameList.length; i++){
-        let xoom = payerNameList[i];
         let currentPayerCounter = 0;
         for (let iter = 0; iter < userTransactions.length; iter++){
             if (payerNameList[i] === userTransactions[iter].payer) {
-                console.log('its a doozy');
                 currentPayerCounter = currentPayerCounter + userTransactions[iter].points;
-                console.log(currentPayerCounter);
             }
         }
-
         let obj2 = {};
         obj2[payerNameList[i]] = currentPayerCounter;
         payerNameAndPoints.push(obj2);
-        console.log(payerNameAndPoints);
     }
     res.render('balance.ejs', {
         payerNameAndPoints: payerNameAndPoints,
