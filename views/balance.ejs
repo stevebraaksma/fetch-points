@@ -14,8 +14,11 @@
 
     <h2>Here is Your Balance!</h2>
 
-    <% for (let i = 0; i < payerNameAndPoints.length; i++){ %>
-    <%=payerNameAndPoints[i].Coors%> <% } %> <% } else { %>
+    <%for (let i = 0; i < payerNameAndPoints.length; i++){ %>
+    <%=JSON.stringify(payerNameAndPoints[i])%>
+    <br />
+    <%}%> <% } else { %>
+
     <h2>Sorry, you have no balance</h2>
     <% } %>
 
