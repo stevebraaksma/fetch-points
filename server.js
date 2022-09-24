@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 
 // add route
 app.post('/add', (req, res) => {
-    res.render('home.ejs');
+    res.render('add.ejs');
     let currentTransactionPayer = req.body.payer;
     let currentTransactionPoints = Math.floor(req.body.points);
     let currentTransaction = {
@@ -30,10 +30,28 @@ app.post('/add', (req, res) => {
     }
     userTransactions.push(currentTransaction);
     console.log(userTransactions);
-    // also need to push timestamp as well
+
 
     totalPointsAdded = totalPointsAdded + currentTransactionPoints
 
     console.log(totalPointsAdded);
 
 });
+
+
+// do the spend route here
+
+
+// balance route
+app.get('/balance', (req, res) => {
+    res.render('balance.ejs');
+    // console.log('route hit');
+
+    // res.render('home.ejs', {
+    //     points: points,
+    // })
+
+
+});
+
+
