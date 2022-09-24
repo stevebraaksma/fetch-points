@@ -30,7 +30,15 @@ app.post('/add', (req, res) => {
     }
     userTransactions.push(currentTransaction);
     console.log(userTransactions);
-
+    // also need to push timestamp as well
+    // consider - may need to have some type of input selector
+    // .. for the time stamp to be in a standard format
+    // .. better yet, have a selector
+    //  a) default (current) time
+    //  b) 2nd radio button, select different time stamp
+    // but we need to keep this simple at first
+    // it may actually be simpler to have a year/day/time selector
+    // and worry about default later or not at all
 
     totalPointsAdded = totalPointsAdded + currentTransactionPoints
 
@@ -44,13 +52,13 @@ app.post('/add', (req, res) => {
 
 // balance route
 app.get('/balance', (req, res) => {
-    res.render('balance.ejs');
+    // res.render('balance.ejs');
     // console.log('route hit');
 
-    // res.render('home.ejs', {
-    //     points: points,
-    // })
-
+    res.render('balance.ejs', {
+        userTransactions: userTransactions,
+    })
+    console.log(userTransactions[0].payer);
 
 });
 
