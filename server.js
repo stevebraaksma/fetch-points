@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 let userTransactions = [];
 let spendTransactions = [];
 let totalPointsAdded = 0;
-let totalPointsSpent = 0;
+// let totalPointsSpent = 0;
 
 // home route
 app.get('/', (req, res) => {
@@ -27,6 +27,8 @@ app.post('/add', (req, res) => {
     let currentTransaction = {
         payer: currentTransactionPayer,
         points: currentTransactionPoints,
+        // when adding points, also set initial balance to this value
+        balance: currentTransactionPoints,
     }
     userTransactions.push(currentTransaction);
     // also need to push timestamp as well
@@ -56,11 +58,14 @@ app.post('/spend', (req, res) => {
         if (currentSpendRequest <= 0) {
             break;
         }
-        if (totalPointsSpent + currentSpendRequest > totalPointsAdded) {
+        // if (totalPointsSpent + currentSpendRequest > totalPointsAdded) {
+        if (currentSpendRequest > totalPointsAdded) {
+
             break;
         }
 
         let pointValueToPush = 0;
+        // let unspentBalance = 0;
         if (currentSpendRequest < pointsIterator){
             pointValueToPush = currentSpendRequest
         } 
@@ -73,8 +78,19 @@ app.post('/spend', (req, res) => {
         }
         spendTransactions.push(currentSpendTransaction);
         pointsCounterVariable = pointsCounterVariable + pointValueToPush;
+
+        // decrement currentSpendRequest
+        currentSpendRequest = currentSpendRequest - pointValueToPush;
+
+        // here, push unspent balance to userTransactions in the 3rd position
+        // (after timestamp added, would need to move this to the fourth postion)
+        // userTransactionsuserTransactions[i].spent = 100;
+        userTransactions[i].spent = pointValueToPush;
+        userTransactions[i].balance = userTransactions[i].points - pointValueToPush;
+        console.log(userTransactions);
+
     }
-    totalPointsSpent = totalPointsSpent + pointsCounterVariable;
+    // totalPointsSpent = totalPointsSpent + pointsCounterVariable;
 
     res.render('spend.ejs', {
         spendTransactions: spendTransactions,
