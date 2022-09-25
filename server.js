@@ -10,6 +10,7 @@ app.listen(3000, () => console.log(`server is listening on port 3000`));
 app.use(express.urlencoded({ extended: false }));
 
 let userTransactions = [];
+let spendTransactions = [];
 let totalPointsAdded = 0;
 let totalPointsSpent = 0;
 
@@ -39,20 +40,49 @@ app.post('/add', (req, res) => {
     // and worry about default later or not at all
 
     totalPointsAdded = totalPointsAdded + currentTransactionPoints
+    console.log(totalPointsAdded)
 });
 
 
 // do the spend route here
-// balance route
-app.get('/spend', (req, res) => {
-   
+app.post('/spend', (req, res) => {
+    let currentSpendRequest = req.body.points;
+    // totalPointsSpent = totalPointsSpent + currentSpendRequest
+    let pointsCounterVariable = 0;
+    for (let i = 0; i < userTransactions.length; i++) {
+        let currrentPayer = userTransactions[i].payer;
+        let pointsIterator = userTransactions[i].points;
 
+        if (currentSpendRequest <= 0) {
+            break;
+        }
+        if (totalPointsSpent + currentSpendRequest > totalPointsAdded) {
+            break;
+        }
 
+        let pointValueToPush = 0;
+        if (currentSpendRequest < pointsIterator){
+            pointValueToPush = currentSpendRequest
+        } 
+        if (currentSpendRequest >= pointsIterator){
+            pointValueToPush = pointsIterator
+        }
+        let currentSpendTransaction = {
+            payer: currrentPayer,
+            points: pointValueToPush,
+        }
+        spendTransactions.push(currentSpendTransaction);
+        pointsCounterVariable = pointsCounterVariable + pointValueToPush;
+    }
+    totalPointsSpent = totalPointsSpent + pointsCounterVariable;
 
-    res.render('balance.ejs', {
-        userTransactions: userTransactions,
+    res.render('spend.ejs', {
+        spendTransactions: spendTransactions,
     })
 });
+
+
+
 
 //transactions route
 app.get('/transactions', (req, res) => {

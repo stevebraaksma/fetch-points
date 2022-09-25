@@ -8,7 +8,21 @@
 	</head>
 	<body>
 		<h1>Fetch-Points</h1>
-		<h2>Points Spent!</h2>
+
+		<% if (spendTransactions.length > 0) { %>
+
+			<h2>Points Spent!</h2>
+		
+			<%for (let i = 0; i < spendTransactions.length; i++){ %>
+			<%=JSON.stringify(spendTransactions[i])%>
+			<br />
+			<%}%> <% } else { %>
+		
+			<h2>Sorry, you are not able to spend that much</h2>
+			<% } %>
+
+
+
 		<br><br><br>
 		<form action="/">
 			<input type="submit" value="Back to Home" />
