@@ -12,7 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 let userTransactions = [];
 let spendTransactions = [];
 let totalPointsAdded = 0;
-// let totalPointsSpent = 0;
 
 // home route
 app.get('/', (req, res) => {
@@ -24,23 +23,15 @@ app.post('/add', (req, res) => {
     res.render('add.ejs');
     let currentTransactionPayer = req.body.payer;
     let currentTransactionPoints = Math.floor(req.body.points);
+    let currentDate = req.body.date;
     let currentTransaction = {
         payer: currentTransactionPayer,
         points: currentTransactionPoints,
         // when adding points, also set initial balance to this value
         balance: currentTransactionPoints,
+        date: currentDate,
     }
     userTransactions.push(currentTransaction);
-    // also need to push timestamp as well
-    // consider - may need to have some type of input selector
-    // .. for the time stamp to be in a standard format
-    // .. better yet, have a selector
-    //  a) default (current) time
-    //  b) 2nd radio button, select different time stamp
-    // but we need to keep this simple at first
-    // it may actually be simpler to have a year/day/time selector
-    // and worry about default later or not at all
-
     totalPointsAdded = totalPointsAdded + currentTransactionPoints
     console.log(totalPointsAdded)
 });
@@ -49,23 +40,26 @@ app.post('/add', (req, res) => {
 // do the spend route here
 app.post('/spend', (req, res) => {
     let currentSpendRequest = req.body.points;
-    // totalPointsSpent = totalPointsSpent + currentSpendRequest
-    let pointsCounterVariable = 0;
+    // sort by transaction date
+    userTransactions.sort((a, b) => {
+        let da = new Date(a.date),
+            db = new Date(b.date);
+        return da - db;
+    });
+
     for (let i = 0; i < userTransactions.length; i++) {
         let currrentPayer = userTransactions[i].payer;
-        let pointsIterator = userTransactions[i].points;
+        let pointsIterator = userTransactions[i].balance;
 
         if (currentSpendRequest <= 0) {
             break;
         }
-        // if (totalPointsSpent + currentSpendRequest > totalPointsAdded) {
         if (currentSpendRequest > totalPointsAdded) {
 
             break;
         }
 
         let pointValueToPush = 0;
-        // let unspentBalance = 0;
         if (currentSpendRequest < pointsIterator){
             pointValueToPush = currentSpendRequest
         } 
@@ -77,28 +71,15 @@ app.post('/spend', (req, res) => {
             points: pointValueToPush,
         }
         spendTransactions.push(currentSpendTransaction);
-        pointsCounterVariable = pointsCounterVariable + pointValueToPush;
-
-        // decrement currentSpendRequest
         currentSpendRequest = currentSpendRequest - pointValueToPush;
-
-        // here, push unspent balance to userTransactions in the 3rd position
-        // (after timestamp added, would need to move this to the fourth postion)
-        // userTransactionsuserTransactions[i].spent = 100;
-        userTransactions[i].spent = pointValueToPush;
-        userTransactions[i].balance = userTransactions[i].points - pointValueToPush;
+        userTransactions[i].balance = userTransactions[i].balance - pointValueToPush;
         console.log(userTransactions);
 
     }
-    // totalPointsSpent = totalPointsSpent + pointsCounterVariable;
-
     res.render('spend.ejs', {
         spendTransactions: spendTransactions,
     })
 });
-
-
-
 
 //transactions route
 app.get('/transactions', (req, res) => {
@@ -107,14 +88,8 @@ app.get('/transactions', (req, res) => {
     })
 });
 
-
 // balance route
 app.get('/balance', (req, res) => {
-   
-
-    // let consolidatedPayers = [];
-
-    // This code works, adds company name to list only if not alreay in the list
     let payerNameList = [];
     for (let i = 0; i < userTransactions.length; i++){
         if (payerNameList.includes(userTransactions[i].payer)) {
@@ -122,9 +97,7 @@ app.get('/balance', (req, res) => {
             payerNameList.push(userTransactions[i].payer)
         }
     }
-
     let payerNameAndPoints = [];
-
     for (let i = 0; i < payerNameList.length; i++){
         let currentPayerCounter = 0;
         for (let iter = 0; iter < userTransactions.length; iter++){
