@@ -6,35 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fetch-Points</title>
   </head>
-  <body>
+  <body style="background-color: #f8a619">
     <h1>Fetch-Points</h1>
     <br /><br />
-    <form action="/add" method="POST">
-      Payer: <input type="text" name="payer" /><br /><br />
-      Points: <input type="number" name="points" /><br /><br />
-      Date: <input type="date" name="date" /><br /><br />
-      <input type="submit" name="" value="Add Transaction" />
-    </form>
+    <div style="background-color: lightgray; width: 250px; padding: 10px">
+      <form action="/add" method="POST">
+        Payer: <input type="text" name="payer" /><br /><br />
+        Points: <input type="number" name="points" /><br /><br />
+        Date: <input type="date" name="date" /><br /><br />
+        <input type="submit" name="" value="Add Transaction" />
+      </form>
+    </div>
     <br /><br />
 
-    <form action="/spend" method="POST">
-      Points: <input type="number" name="points" /><br /><br />
-      <input
-        style="font-size: 40px"
-        type="submit"
-        name=""
-        value="Spend Points"
-      />
-    </form>
+    <div style="background-color: lightgray; width: 250px; padding: 10px">
+      <form action="/spend" method="POST">
+        Points: <input type="number" name="points" /><br /><br />
+        <input type="submit" name="" value="Spend Points" />
+      </form>
+    </div>
     <br /><br />
-
-    <form action="/balance">
-      <input type="submit" value="View Balance" />
-    </form>
+    <div style="background-color: lightgray; width: 250px; padding: 10px">
+      <form action="/balance">
+        <input type="submit" value="View Balance" />
+      </form>
+    </div>
     <br /><br />
-    <form action="/transactions">
-      <input type="submit" value="View All Transactions" />
-    </form>
+    <div style="background-color: lightgray; width: 250px; padding: 10px">
+      <form action="/transactions">
+        <input type="submit" value="View All Transactions" />
+      </form>
+    </div>
     <br /><br />
   </body>
 </html>
