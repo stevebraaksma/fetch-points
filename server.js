@@ -50,15 +50,12 @@ app.post('/spend', (req, res) => {
     for (let i = 0; i < userTransactions.length; i++) {
         let currrentPayer = userTransactions[i].payer;
         let pointsIterator = userTransactions[i].balance;
-
         if (currentSpendRequest <= 0) {
             break;
         }
         if (currentSpendRequest > totalPointsAdded) {
-
             break;
         }
-
         let pointValueToPush = 0;
         if (currentSpendRequest < pointsIterator){
             pointValueToPush = currentSpendRequest
